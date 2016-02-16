@@ -1,0 +1,33 @@
+Import('rtconfig')
+Import('RTT_ROOT')
+
+from building import *
+
+cwd = GetCurrentDir()
+src = [
+    cwd+'/RTOS/rtthread/WWD/wwd_rtos.c',
+    cwd+'/network/wwd_buffer.c',
+    cwd+'/network/wwd_network.c',
+    cwd+'/internal/bus_protocols/SDIO/wwd_bus_protocol.c',
+    cwd+'/internal/bus_protocols/wwd_bus_common.c',
+    cwd+'/internal/chips/43362A2/wwd_ap.c',
+    ]
+src += Glob('internal/*.c')
+
+CPPPATH = [
+    cwd,
+    cwd+'/include',
+    cwd+'/include/network',
+    cwd+'/include/platform',
+    cwd+'/include/RTOS',
+    cwd+'/internal',
+    cwd+'/internal/bus_protocols',
+    cwd+'/internal/bus_protocols/SDIO',
+    cwd+'/internal/chips/43362A2',
+    cwd+'/RTOS/rtthread/WWD',
+    cwd+'/network'
+]
+
+group = DefineGroup('wiced', src, depend=['RT_USING_WICED'], CPPPATH=CPPPATH)
+
+Return('group')
